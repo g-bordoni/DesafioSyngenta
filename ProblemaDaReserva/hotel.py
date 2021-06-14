@@ -1,40 +1,41 @@
 from orcamento import Orcamento
-from abc import ABCMeta, abstractclassmethod
+from abc import ABC, abstractmethod
 
 
-class Hotel(object):
-    __metaclass__ = ABCMeta
-    
-    __estralas = None
-    __valores_tupla = None
-    __diarias_lista = None
+class Hotel(ABC):    
+    __estrelas = None
+    __valores_regulares = None
+    __valores_fidelidade = None
     __orcamento = None
-
-    def get_orcamento(self):
-        return self.__orcamento
-    def get_valores(self):
-        return self.__valores_tupla
-    def get_diarias_lista(self):
-        return self.__diarias_lista
-    def get_estrelas(self):
-        return self.__estrelas
-
-    def __gerar_orcamento(self):
-        self.__orcamento = Orcamento(self.get_valores(), self.get_diarias_lista())
     
-    def __init__(self, estrelas: int, valores: tuple, diarias: list):
-        self.__estralas = estrelas
-        self.__valores_tupla = valores
-        self.__diarias_lista = diarias
-        self.__gerar_orcamento()
+    def __init__(self, estrelas: int, valores_regulares: tuple, valores_fidelidade: tuple):
+        self.__estrelas = estrelas
+        self.__valores_regulares = valores_regulares
+        self.__valores_fidelidade = valores_fidelidade
+
+    def fazer_orcamento(self, entrada: str):
+        cliente_tipo, diarias = entrada.split(":")
+        valores_referencia = self.__valores_regulares if cliente_tipo.upper() == "REGULAR" \
+            else self.__valores_fidelidade
+
+        self.__orcamento = Orcamento(valores_referencia, diarias)
+
+    def get_orcamento(self)->object:
+        return self.__orcamento
+    def get_estrelas(self)->int:
+        return self.__estrelas
 
     def __gt__(self, o:object)->bool:
         if self.__orcamento < o.get_orcamento():
             return True
-        elif self.__orcamento == o.get_orcamento() and self.__estralas > o.get_estrelas:
+        elif self.__orcamento == o.get_orcamento() and self.__estrelas > o.get_estrelas():
             return True
         else :
             False
+
+    @abstractmethod
+    def __str__(self) -> str:
+        pass
 
 
         
