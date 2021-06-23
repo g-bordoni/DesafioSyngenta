@@ -1,5 +1,12 @@
-Nearly empty Python3 project with a failing test!
+Chalange
 ===
+The task is available at the .docx file and the resolution is exposed in ProblemaDaReserva directory.
+
+Virtual Environment Issues
+===
+---
+Nearly empty Python3 project with a failing test!
+---
 
 **Ensure that you have Python 3 installed and that your PIP installation points to it**
 
